@@ -9,6 +9,8 @@ $dbh = new sdbh();
     <link href="assets/css/style.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
 <div class="container">
@@ -37,8 +39,11 @@ $dbh = new sdbh();
                     </select>
                 <?php } ?>
 
-                <label for="customRange1" class="form-label" id="count">Количество дней:</label>
-                <input type="number" name="days" class="form-control" id="customRange1" min="1" max="30">
+                <label for="start-day" class="form-label">Начальный день:</label>
+                <input type="text" name="start-day" class="start-day form-control" id="start-day">
+                <label for="end-day" class="form-label">Конечный день</label>
+                <input type="text" name="end-day" class="end-day form-control" id="end-day">
+
 
                 <?php $services = unserialize($dbh->mselect_rows('a25_settings', ['set_key' => 'services'], 0, 1, 'id')[0]['set_value']);
                 if (is_array($services)) {
@@ -85,5 +90,18 @@ $dbh = new sdbh();
         });
     });
 </script>
+
+<script>
+
+    flatpickr(".start-day", {
+        dateFormat: "d.m.Y",
+
+    });
+    flatpickr(".end-day", {
+        dateFormat: "d.m.Y"
+    });
+
+</script>
+
 </body>
 </html>

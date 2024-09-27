@@ -7,7 +7,8 @@ class Calculate
     public function calculate1()
     {
         $dbh = new sdbh();
-        $days = isset($_POST['days']) ? $_POST['days'] : 0;
+        $startDay = strtotime($_POST['start-day']);
+        $endDay = strtotime($_POST['end-day']);
         $product_id = isset($_POST['product']) ? $_POST['product'] : 0;
         $selected_services = isset($_POST['services']) ? $_POST['services'] : [];
         $product = $dbh->make_query("SELECT * FROM a25_products WHERE ID = $product_id");
@@ -19,6 +20,8 @@ class Calculate
             echo "Ошибка, товар не найден!";
             return;
         }
+
+        $days = ($endDay - $startDay) / 86400 + 1;
 
         $tarifs = unserialize($tarif);
         if (is_array($tarifs)) {
